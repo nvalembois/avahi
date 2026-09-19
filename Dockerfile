@@ -17,7 +17,7 @@ RUN wget https://github.com/avahi/avahi/releases/download/v${AVAHI_VERSION}/avah
 
 WORKDIR /avahi-${AVAHI_VERSION}
 RUN ./configure \
-      --prefix=/ \
+      --prefix='' \
       --disable-shared \
       --disable-static \
       --disable-libevent \
