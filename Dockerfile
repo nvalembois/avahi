@@ -40,7 +40,7 @@ RUN ./configure \
       --with-distro=none \
     && make -j$(nproc) \
     && make install DESTDIR=/out \
-    && setcap 'cap_net_bind_service=+ep' /out/sbin/avahi-daemon \
+    && setcap 'cap_net_bind_service=+ep,cap_net_raw=+ep' /out/sbin/avahi-daemon \
     && rm -r /out/lib /out/include /out/sbin/avahi-dnsconfd /out/share/avahi \
              /out/etc/avahi/services/* /out/etc/avahi/avahi-dnsconfd.action
 
@@ -59,4 +59,4 @@ RUN apk add --no-cache libdaemon libexpat libintl \
 USER avahi
 
 EXPOSE 5353/udp
-ENTRYPOINT ["/sbin/avahi-daemon", "--no-drop-root", "-f", "/etc/avahi/avahi-daemon.conf"]
+ENTRYPOINT ["/sbin/avahi-daemon", "--no-drop-root", "--no-rlimits", "--no-proc-title", "-f", "/etc/avahi/avahi-daemon.conf"]
